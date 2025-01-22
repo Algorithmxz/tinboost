@@ -1,0 +1,114 @@
+services:
+  db:
+    container_name: db
+    image: mariadb:10-focal
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="$$(cat /run/secrets/db-password)" --silent']
+      interval: 3s
+      retries: 5
+      start_period: 40s
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=tdx
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    expose:
+      - 3306
+    networks:
+      the_net:
+        ipv4_address: 172.16.238.2
+
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy/nginx.tmpl:/app/nginx.tmpl
+      - ./proxy/certs/:/etc/nginx/certs:ro
+      - ./proxy/vhost.d/:/etc/nginx/vhost.d
+      - ./proxy/html/:/usr/share/nginx/html
+    labels:
+        com.github.nginx-proxy.nginx-proxy: "true"
+    networks:
+      the_net:
+        ipv4_address: 172.16.238.3
+
+  tdx:
+    container_name: tdx
+    restart: always
+    init: true
+    tty: true
+    build:
+      context: tdx
+      target: final
+    environment:
+      - DOMAIN=${DOMAIN}
+      - SERVER=${SERVER}
+      - VIRTUAL_HOST=${DOMAIN},2.${DOMAIN},3.${DOMAIN},4.${DOMAIN},5.${DOMAIN}
+      - VIRTUAL_PROTO=https
+      - VIRTUAL_PORT=443
+    depends_on:
+      db:
+        condition: service_healthy
+    secrets:
+      - db-password
+    networks:
+      the_net:
+        ipv4_address: 172.16.238.4
+  
+  php:
+    container_name: php
+    restart: always
+    build:
+      context: php
+    ports:
+      - "419:80"
+    volumes:
+      - ./php/app:/var/www/html
+      - ./php/custom.conf:/etc/apache2/conf-enabled/custom.conf
+    environment:
+      - VIRTUAL_HOST=php.${DOMAIN}
+    depends_on:
+      db:
+        condition: service_healthy
+    secrets:
+      - db-password
+    networks:
+      the_net:
+        ipv4_address: 172.16.238.5
+
+  sql:
+    container_name: sql
+    build:
+      context: sql
+      target: final
+    depends_on:
+      db:
+        condition: service_healthy
+    secrets:
+      - db-password
+    networks:
+      the_net:
+        ipv4_address: 172.16.238.6
+
+volumes:
+  db-data:
+
+secrets:
+  db-password:
+    file: db/password.txt
+
+networks:
+  the_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.16.238.0/24"
